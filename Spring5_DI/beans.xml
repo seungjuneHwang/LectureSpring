@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="data1" class="bean.DataClass"/>
+	<!-- 빈 정의 -->
+	<bean id="test1" class="bean.TestClass">
+		<!-- 생성자를 통한 기본 자료형 값 주입 -->
+		<constructor-arg index="0" value="100"/>
+		<!-- 생성자를 통한 문자열 값 주입 -->
+		<constructor-arg index="1" value="문자열2"/>
+		<!-- 생성자를 통한 객체 주입 -->
+		<constructor-arg index="2" ref="data1"/>
+	</bean>
+	
+	<bean id="d_class" class="bean.DataClass"/>
+	<bean id="test2" class="bean.TestClass">
+		<!-- setter를 통한 기본 자료형 값 주입 -->
+		<!-- TestClass에 있는 setData1을 호출 -->
+		<property name="data1" value="500"/>
+		<!-- setter를 통한 문자열 값 주입 -->
+		<property name="data2" value="문자열4"/>
+		<!-- setter를 통한 객체 주입 -->
+		<property name="data3" ref="d_class"/>
+	</bean>
+	
+	<!-- ArrayList 기본 자료형 주입 -->
+	<bean id="test3" class="bean.TestClass">
+		<property name="data4">
+			<list>
+				<value>t6 문자열1</value>
+				<value>t6 문자열2</value>
+				<value>t6 문자열3</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- ArrayList 객체 주입 -->
+	<bean id="d_class2" class="bean.DataClass" scope="prototype"/>
+	
+	<bean id="test4" class="bean.TestClass">
+		<property name="data5">
+			<list>
+				<!-- 미리 정의한 빈을 주입 -->
+				<ref bean="d_class2"/>
+				<ref bean="d_class2"/>
+				<!-- 바로 객체를 생성해서 주입 -->
+				<bean class="bean.DataClass"/>
+			</list>
+		</property>
+	</bean>
+	<!-- HashMap을 주입한다. -->
+	<bean id="test5" class="bean.TestClass">
+		<property name="data6">
+			<map>
+				<!-- 기본 자료형 및 문자열 주입 -->
+				<entry key="v1" value="문자열1"/>
+				<entry key="v2" value="100" value-type="int"/>
+				<!-- 객체 주입 -->
+				<entry key="v3" value-ref="d_class2"/>
+			</map>
+		</property>
+	</bean>
+	
+
+</beans>
+
+
+
+
+
+
+
+
+
