@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 싱글톤 -->
+	<!-- xml 파일을 읽어들이때 객체를 생성하고
+		getBean 메서드 호출시 만들어진 객체의 주소값을
+		반환한다.
+	 -->
+	 <bean id="test1" class="bean.TestClass"/>
+	 
+	 <!-- 프로토타입 객체 -->
+	 <!-- 개발자 getBean 메서드를 호출 할 때 객체가
+	 	  생성
+	  -->
+	 <bean id="test2" class="bean.TestClass" scope="prototype"/>
+</beans>
+
+
+
+
+
+
+
