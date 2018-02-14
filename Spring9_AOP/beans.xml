@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- 빈설정 -->
+	<bean id="test1" class="bean.TestClass"/>
+	<!-- advisor bean 설정 -->
+	<bean id="before_advisor" class="bean.BeforeAdvisor"/>
+	<bean id="after_advisor" class="bean.AfterAdvisor"/>
+	<bean id="around_advisor" class="bean.AroundAdvisor"/>
+	<!--  Advice Bean 객체 -->
+	<bean id="advisor1"
+	      class="org.springframework.aop.support.DefaultPointcutAdvisor">
+	      <!--  advisor bean 객체를 셋팅한다. -->
+	      <property name="advice" ref="before_advisor"/>
+	      <!--  point cut 지정 -->
+	      <!--  point cut : Advisor에 있는 메서드를
+	                       weaving 시킬 메서드 지정
+	            weaving : 개발자가 호출한 메서드 전, 후에
+	                      Advisor에 있는 메서드를 호출
+	                       하겠금 설정하는 작업
+	       -->
+	      <property name="pointcut">
+	      	<bean class="org.springframework.aop.support.JdkRegexpMethodPointcut">
+	      		<property name="pattern">
+	      			<value>.*sayHello.*</value>
+	      		</property>
+	      	</bean>	
+	      </property>
+	</bean>
+	
+	<bean id="advisor2" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<property name="advice" ref="after_advisor"/>
+		<property name="pointcut">
+			<bean class="org.springframework.aop.support.JdkRegexpMethodPointcut">
+				<property name="pattern">
+					<value>.*sayHello.*</value>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="advisor3" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<property name="advice" ref="around_advisor"/>
+		<property name="pointcut">
+			<bean class="org.springframework.aop.support.JdkRegexpMethodPointcut">
+				<property name="pattern">
+					<value>.*sayHello.*</value>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- AOP 설정 -->
+	<bean id="proxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<!-- 개발자가 호출할 메서드를 가지고 있는 빈 객체 -->
+		<property name="target" ref="test1"/>
+		<!-- Advisor 빈 객체 리스트 설정 -->
+		<property name="interceptorNames">
+			<list>
+				<value>advisor1</value>
+				<value>advisor2</value>
+				<value>advisor3</value>
+			</list>
+		</property>
+	</bean>
+</beans>
+
+
+
+
+
+
+
+
+

@@ -15,7 +15,7 @@
 	</bean>
 	
 	<bean id="d_class" class="bean.DataClass"/>
-	<bean id="test2" class="bean.TestClass">
+	<bean id="3" class="bean.TestClass">
 		<!-- setter를 통한 기본 자료형 값 주입 -->
 		<!-- TestClass에 있는 setData1을 호출 -->
 		<property name="data1" value="500"/>
